@@ -1,0 +1,419 @@
+@font-face {
+  font-family: 'Anek Malayalam UI';
+  src: url('/assets/fonts/anek-malayalam-malayalam-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  unicode-range: U+0D00-0D7F, U+200C-200D, U+25CC;
+}
+@font-face {
+  font-family: 'Anek Malayalam UI';
+  src: url('/assets/fonts/anek-malayalam-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  unicode-range: U+0000-00FF;
+}
+@font-face {
+  font-family: 'Anek Malayalam UI';
+  src: url('/assets/fonts/anek-malayalam-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  unicode-range: U+0000-00FF;
+}
+
+:root {
+  --ui: 'Anek Malayalam UI', 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  --accent: #ffd34d;
+  --panel: rgba(12, 16, 18, 0.46);
+  --line: rgba(255, 255, 255, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0b0f10;
+  color: #fff;
+  font-family: var(--ui);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+#game {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  outline: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+kbd {
+  font-family: var(--ui);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 2px 7px 1px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- HUD */
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+}
+
+#zone {
+  position: absolute;
+  right: 34px;
+  bottom: 30px;
+  text-align: right;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+#zone.show {
+  opacity: 1;
+  transform: none;
+}
+#zone-ml {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+}
+#zone-en {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  margin-top: 2px;
+}
+#zone-road {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+#minimap-wrap {
+  position: absolute;
+  left: 26px;
+  bottom: 26px;
+  width: 196px;
+  height: 196px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.5),
+    inset 0 0 22px rgba(0, 0, 0, 0.5);
+  background: #1d2a26;
+}
+#minimap {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#compass {
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 21px;
+  text-align: center;
+  color: var(--accent);
+  text-shadow: none;
+  transform-origin: 10px 92px;
+}
+
+#speedo {
+  position: absolute;
+  right: 30px;
+  bottom: 138px;
+  width: 190px;
+  height: 190px;
+  text-align: center;
+}
+#speedo svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.6));
+}
+#speedo-track,
+#speedo-fill {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+#speedo-track {
+  stroke: rgba(255, 255, 255, 0.2);
+}
+#speedo-fill {
+  stroke: var(--accent);
+  stroke-dasharray: 377;
+  stroke-dashoffset: 377;
+  transition: stroke 0.2s;
+}
+#speed-value {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 54px;
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+#speed-unit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 114px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  opacity: 0.8;
+}
+#gear {
+  position: absolute;
+  left: 50%;
+  top: 138px;
+  width: 30px;
+  margin-left: -15px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--line);
+}
+#vehicle-name {
+  position: absolute;
+  left: -40px;
+  right: -40px;
+  top: 170px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+#prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 120px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px 8px 11px;
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  font-size: 15px;
+  letter-spacing: 0.03em;
+}
+#prompt kbd {
+  font-size: 13px;
+  padding: 3px 9px 2px;
+}
+
+#toast {
+  position: absolute;
+  left: 50%;
+  top: 34px;
+  transform: translateX(-50%);
+  padding: 9px 18px 8px;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+#controls {
+  position: absolute;
+  left: 26px;
+  top: 24px;
+  padding: 12px 16px 12px;
+  border-radius: 12px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+  font-size: 12.5px;
+  min-width: 190px;
+  transition: opacity 0.4s;
+}
+#controls.faded {
+  opacity: 0;
+}
+.controls-title {
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 11px;
+  opacity: 0.9;
+  margin-bottom: 9px;
+}
+.controls-title span {
+  opacity: 0.6;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-weight: 400;
+}
+.controls-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 12px;
+  align-items: center;
+}
+.controls-grid kbd {
+  justify-self: start;
+}
+.controls-extra {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+#fps {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  font-size: 11px;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------- big map */
+#bigmap {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 10, 11, 0.82);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 5;
+}
+#bigmap-canvas {
+  max-height: 88vh;
+  max-width: 92vw;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+#bigmap-hint {
+  font-size: 13px;
+  opacity: 0.8;
+  letter-spacing: 0.04em;
+}
+
+/* ---------------------------------------------------------------- loading */
+#loading {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(1200px 700px at 70% 20%, rgba(255, 196, 96, 0.22), transparent 60%),
+    radial-gradient(900px 600px at 15% 90%, rgba(38, 120, 96, 0.35), transparent 60%),
+    linear-gradient(180deg, #10201e 0%, #0a1112 100%);
+  transition: opacity 0.8s ease;
+}
+#loading.fade {
+  opacity: 0;
+  pointer-events: none;
+}
+.loading-inner {
+  text-align: center;
+  width: min(560px, 86vw);
+}
+.loading-ml {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+.loading-title {
+  font-size: 96px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-left: 0.2em;
+  line-height: 1.05;
+}
+.loading-sub {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 6px 0 34px;
+}
+.bar {
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+}
+#bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.25s ease;
+}
+#loading-status {
+  margin-top: 12px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  opacity: 0.65;
+  text-transform: uppercase;
+  min-height: 16px;
+}
+#start {
+  margin-top: 26px;
+  font-family: var(--ui);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #111;
+  background: var(--accent);
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 34px 12px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255, 200, 60, 0.3);
+  transition: transform 0.15s ease;
+}
+#start:hover {
+  transform: translateY(-2px) scale(1.02);
+}

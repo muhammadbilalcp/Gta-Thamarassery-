@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kochi — Miniature Open World</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌴</text></svg>" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+
+    <div id="hud" class="hidden">
+      <div id="zone">
+        <div id="zone-ml"></div>
+        <div id="zone-en"></div>
+        <div id="zone-road"></div>
+      </div>
+
+      <div id="minimap-wrap">
+        <canvas id="minimap" width="220" height="220"></canvas>
+        <div id="compass">N</div>
+      </div>
+
+      <div id="speedo" class="hidden">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <path id="speedo-track" d="M 36 150 A 80 80 0 1 1 164 150" />
+          <path id="speedo-fill" d="M 36 150 A 80 80 0 1 1 164 150" />
+        </svg>
+        <div id="speed-value">0</div>
+        <div id="speed-unit">km/h</div>
+        <div id="gear">D</div>
+        <div id="vehicle-name"></div>
+      </div>
+
+      <div id="prompt" class="hidden"><kbd>E</kbd><span id="prompt-text">Enter vehicle</span></div>
+      <div id="toast" class="hidden"></div>
+
+      <div id="controls">
+        <div class="controls-title">Controls <span>· <kbd>F1</kbd> hide</span></div>
+        <div id="controls-foot" class="controls-grid">
+          <kbd>W A S D</kbd><span>Move</span>
+          <kbd>Shift</kbd><span>Run</span>
+          <kbd>Space</kbd><span>Jump</span>
+          <kbd>Mouse</kbd><span>Look</span>
+          <kbd>E</kbd><span>Enter vehicle</span>
+        </div>
+        <div id="controls-drive" class="controls-grid hidden">
+          <kbd>W</kbd><span>Accelerate</span>
+          <kbd>S</kbd><span>Brake / reverse</span>
+          <kbd>A D</kbd><span>Steer</span>
+          <kbd>Space</kbd><span>Handbrake</span>
+          <kbd>H</kbd><span>Horn</span>
+          <kbd>R</kbd><span>Reset vehicle</span>
+          <kbd>E</kbd><span>Exit vehicle</span>
+        </div>
+        <div class="controls-grid controls-extra">
+          <kbd>M</kbd><span>Big map</span>
+          <kbd>T</kbd><span>Fast travel</span>
+        </div>
+      </div>
+
+      <div id="fps"></div>
+    </div>
+
+    <div id="bigmap" class="hidden">
+      <canvas id="bigmap-canvas"></canvas>
+      <div id="bigmap-hint">Click a landmark to fast travel · <kbd>M</kbd> / <kbd>Esc</kbd> to close</div>
+    </div>
+
+    <div id="loading">
+      <div class="loading-inner">
+        <div class="loading-ml">കൊച്ചി</div>
+        <div class="loading-title">KOCHI</div>
+        <div class="loading-sub">Miniature Open World · Kundannoor — Vyttila — Kaloor — Edappally</div>
+        <div class="bar"><div id="bar-fill"></div></div>
+        <div id="loading-status">Loading…</div>
+        <button id="start" class="hidden">Click to play</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
