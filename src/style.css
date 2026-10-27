@@ -417,3 +417,182 @@ kbd {
 #start:hover {
   transform: translateY(-2px) scale(1.02);
 }
+
+/* ------------------------------------------------------------- Mobile touch UI */
+.mobile-action-btn {
+  font-family: var(--ui);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: none;
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
+.mobile-action-btn:active {
+  transform: scale(0.92) !important;
+  filter: brightness(1.3);
+}
+
+@media (max-width: 900px) {
+  #minimap-wrap {
+    left: 14px;
+    top: 14px;
+    bottom: auto;
+    width: 130px;
+    height: 130px;
+  }
+  #zone {
+    right: 18px;
+    bottom: auto;
+    top: 18px;
+  }
+  #zone-en {
+    font-size: 26px;
+  }
+  #zone-ml {
+    font-size: 16px;
+  }
+  #speedo {
+    right: 14px;
+    bottom: 180px;
+    width: 140px;
+    height: 140px;
+  }
+  #speed-value {
+    top: 40px;
+    font-size: 42px;
+  }
+  #speed-unit {
+    top: 86px;
+    font-size: 11px;
+  }
+  #gear {
+    top: 104px;
+    font-size: 13px;
+  }
+  #vehicle-name {
+    top: 130px;
+    font-size: 10px;
+  }
+  #controls {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------- Combat & Police UI */
+#hit-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 40, 40, 0) 50%, rgba(255, 20, 20, 0.45) 100%);
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
+  z-index: 999;
+}
+#hit-flash.flash {
+  opacity: 1;
+}
+
+#wanted-wrap {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  z-index: 100;
+  pointer-events: none;
+}
+#wanted-label {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  color: #ff3344;
+  text-shadow: 0 0 10px rgba(255, 51, 68, 0.8);
+}
+#wanted-stars {
+  display: flex;
+  gap: 6px;
+}
+.star-svg {
+  width: 22px;
+  height: 22px;
+  fill: rgba(255, 255, 255, 0.2);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+  transition: fill 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+.star-svg.active {
+  fill: #ffd34d;
+  filter: drop-shadow(0 0 8px rgba(255, 211, 77, 0.95));
+  animation: starPulse 0.9s infinite alternate;
+}
+@keyframes starPulse {
+  0% { transform: scale(1); fill: #ffd34d; }
+  100% { transform: scale(1.15); fill: #ff4444; }
+}
+
+#health-wrap {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 100;
+  pointer-events: none;
+}
+#health-bar-bg {
+  width: 140px;
+  height: 12px;
+  background: rgba(15, 20, 24, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+#health-bar-fill {
+  height: 100%;
+  background: #4cd964;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+#health-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+#busted-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 12, 14, 0.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  pointer-events: auto;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+#busted-overlay.active {
+  opacity: 1;
+}
+#busted-inner {
+  text-align: center;
+}
+#busted-title {
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: 0.28em;
+  color: #ff3344;
+  text-shadow: 0 0 30px rgba(255, 51, 68, 0.9);
+  margin-bottom: 12px;
+}
+#busted-sub {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+}

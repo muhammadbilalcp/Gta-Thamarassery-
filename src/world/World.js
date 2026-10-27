@@ -49,7 +49,7 @@ export class World {
       this.roadBuilder = new RoadMeshBuilder(this);
       this.scene.add(this.roadBuilder.build());
     }];
-    yield ['Lighting a Kochi afternoon', () => {
+    yield ['Lighting a Thamarassery afternoon', () => {
       this.environment = new Environment(this.scene, this.renderer, this.assets, this.quality);
       this.land = new Land(this.scene, this.assets, this.terrain);
       this.updaters.push((dt) => this.land.update(dt));

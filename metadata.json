@@ -1,0 +1,8 @@
+{
+  "name": "GTA Thamarassery — Kozhikode Open World",
+  "description": "A GTA-style playable 3D open world of Thamarassery, Kozhikode, Kerala with mobile touch controls, vehicle driving, and authentic landmarks.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

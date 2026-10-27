@@ -61,7 +61,7 @@ export class Landmarks {
 
   _drawSigns() {
     const s = this.signs;
-    // LuLu: flower mark over the italic wordmark.
+    // Churam Mall (formerly LuLu)
     s.add('lulu', 512, 300, (c, w, h) => {
       const petals = ['#e6007e', '#f39200', '#ffde00', '#95c11f', '#009fe3', '#662483', '#e30613', '#00a19a'];
       c.save();
@@ -75,19 +75,19 @@ export class Landmarks {
       });
       c.restore();
       c.fillStyle = '#d3141c';
-      c.font = `italic 800 150px Georgia, 'Times New Roman', serif`;
+      c.font = `italic 800 110px Georgia, 'Times New Roman', serif`;
       c.textAlign = 'center';
       c.textBaseline = 'middle';
       c.lineWidth = 8;
       c.strokeStyle = '#fff6d8';
-      c.strokeText('LuLu', w / 2, 200);
-      c.fillText('LuLu', w / 2, 200);
+      c.strokeText('CHURAM', w / 2, 200);
+      c.fillText('CHURAM', w / 2, 200);
       void h;
     });
-    s.add('luluMl', 512, 120, (c, w, h) => board(c, w, h, { bg: '#b3131b', fg: '#fff', border: '#f5d37a', lines: [{ text: 'ലുലു മാൾ · LuLu MALL' }] }));
-    s.add('luluHyper', 512, 110, (c, w, h) => board(c, w, h, { bg: '#0d7a3a', fg: '#fff', lines: [{ text: 'LuLu HYPERMARKET' }] }));
-    s.add('marriott', 512, 120, (c, w, h) => board(c, w, h, { bg: '#1a1010', fg: '#f3e6d0', border: '#8a1a1a', lines: [{ text: 'MARRIOTT', size: 1.5 }, { text: 'K O C H I', size: 0.7, weight: 400 }] }));
-    // Forum.
+    s.add('luluMl', 512, 120, (c, w, h) => board(c, w, h, { bg: '#b3131b', fg: '#fff', border: '#f5d37a', lines: [{ text: 'താമരശ്ശേരി ചുരം മാൾ · CHURAM MALL' }] }));
+    s.add('luluHyper', 512, 110, (c, w, h) => board(c, w, h, { bg: '#0d7a3a', fg: '#fff', lines: [{ text: 'THAMARASSERY HYPERMARKET' }] }));
+    s.add('marriott', 512, 120, (c, w, h) => board(c, w, h, { bg: '#1a1010', fg: '#f3e6d0', border: '#8a1a1a', lines: [{ text: 'CHURAM RESORT', size: 1.4 }, { text: 'T H A M A R A S S E R Y', size: 0.7, weight: 400 }] }));
+    // Chungam Center (formerly Forum)
     const butterfly = (c, x, y, k) => {
       const cols = ['#e6007e', '#f39200', '#009fe3', '#95c11f'];
       cols.forEach((col, i) => {
@@ -101,7 +101,7 @@ export class Landmarks {
     s.add('forumRoof', 512, 170, (c, w, h) => {
       butterfly(c, 62, 86, 1.35);
       c.fillStyle = '#4a4d52';
-      fitText(c, 'forum', 118, h / 2 + 8, w - 128, 150, 800, 'left');
+      fitText(c, 'chungam', 118, h / 2 + 8, w - 128, 150, 800, 'left');
     });
     s.add('forumScreen', 512, 300, (c, w, h) => {
       const g = c.createLinearGradient(0, 0, w, h);
@@ -111,38 +111,39 @@ export class Landmarks {
       c.fillRect(0, 0, w, h);
       butterfly(c, 96, 150, 1.6);
       c.fillStyle = '#fff';
-      fitText(c, 'forum', 170, 122, w - 200, 110, 800, 'left');
-      fitText(c, 'കൊച്ചി · Kochi', 176, 206, w - 210, 40, 700, 'left');
+      fitText(c, 'CHUNGAM', 170, 122, w - 200, 110, 800, 'left');
+      fitText(c, 'താമരശ്ശേരി · Thamarassery', 176, 206, w - 210, 40, 700, 'left');
       c.strokeStyle = '#111';
       c.lineWidth = 10;
       c.strokeRect(5, 5, w - 10, h - 10);
     });
-    s.add('thomsun', 400, 96, (c, w, h) => board(c, w, h, { bg: '#f4f4f0', fg: '#c4161c', lines: [{ text: 'THOMSUN' }], radius: 4 }));
-    s.add('prestige', 256, 120, (c, w, h) => board(c, w, h, { bg: '#f4f4f0', fg: '#1a1a1a', lines: [{ text: 'Prestige', size: 1.4 }, { text: 'GROUP', size: 0.6, weight: 400 }], radius: 4 }));
-    s.add('forumCanopy', 512, 80, (c, w, h) => board(c, w, h, { bg: '#16181a', fg: '#fff', lines: [{ text: 'forum   ·   ഫോറം' }], radius: 2 }));
-    s.add('artiste', 384, 96, (c, w, h) => board(c, w, h, { bg: null, fg: '#2a2a2a', lines: [{ text: 'THE ARTISTE' }] }));
+    s.add('thomsun', 400, 96, (c, w, h) => board(c, w, h, { bg: '#f4f4f0', fg: '#c4161c', lines: [{ text: 'MALABAR' }], radius: 4 }));
+    s.add('prestige', 256, 120, (c, w, h) => board(c, w, h, { bg: '#f4f4f0', fg: '#1a1a1a', lines: [{ text: 'Calicut', size: 1.4 }, { text: 'COMPLEX', size: 0.6, weight: 400 }], radius: 4 }));
+    s.add('forumCanopy', 512, 80, (c, w, h) => board(c, w, h, { bg: '#16181a', fg: '#fff', lines: [{ text: 'chungam   ·   ചുങ്കം' }], radius: 2 }));
+    s.add('artiste', 384, 96, (c, w, h) => board(c, w, h, { bg: null, fg: '#2a2a2a', lines: [{ text: 'WAYANAD GATEWAY' }] }));
+    // Stadium.
     // Stadium.
     s.add('stadium', 1000, 170, (c, w, h) =>
       board(c, w, h, {
         bg: '#0f3f7a',
         fg: '#fff',
         border: '#f5d37a',
-        lines: [{ text: 'ജവഹർലാൽ നെഹ്‌റു അന്താരാഷ്ട്ര സ്റ്റേഡിയം', size: 1.1 }, { text: 'JAWAHARLAL NEHRU INTERNATIONAL STADIUM · KALOOR', size: 0.8 }],
+        lines: [{ text: 'താമരശ്ശേരി പഞ്ചായത്ത് സ്റ്റേഡിയം', size: 1.1 }, { text: 'THAMARASSERY STADIUM · KOZHIKODE', size: 0.8 }],
       }),
     );
-    s.add('yellow', 256, 120, (c, w, h) => board(c, w, h, { bg: '#f2c313', fg: '#123a8a', lines: [{ text: 'മഞ്ഞപ്പട', size: 1.3 }, { text: 'KALOOR · YELLOW ARMY', size: 0.6 }], radius: 0 }));
-    s.add('gcda', 256, 80, (c, w, h) => board(c, w, h, { bg: '#f4f4f0', fg: '#0f3f7a', lines: [{ text: 'GCDA · GATE' }], radius: 0 }));
-    // Mobility hub.
+    s.add('yellow', 256, 120, (c, w, h) => board(c, w, h, { bg: '#f2c313', fg: '#123a8a', lines: [{ text: 'മലബാർ ആർമി', size: 1.3 }, { text: 'THAMARASSERY · MALABAR', size: 0.6 }], radius: 0 }));
+    s.add('gcda', 256, 80, (c, w, h) => board(c, w, h, { bg: '#f4f4f0', fg: '#0f3f7a', lines: [{ text: 'STADIUM · GATE' }], radius: 0 }));
+    // KSRTC Thamarassery Depot.
     s.add('hub', 1000, 190, (c, w, h) =>
       board(c, w, h, {
         bg: '#0b5f8a',
         fg: '#fff',
         border: '#fff',
-        lines: [{ text: 'വൈറ്റില മൊബിലിറ്റി ഹബ്', size: 1.15 }, { text: 'VYTTILA MOBILITY HUB', size: 0.85 }],
+        lines: [{ text: 'കെ.എസ്.ആർ.ടി.സി താമരശ്ശേരി ഡിപ്പോ', size: 1.15 }, { text: 'KSRTC THAMARASSERY DEPOT', size: 0.85 }],
       }),
     );
-    s.add('waterMetro', 512, 120, (c, w, h) => board(c, w, h, { bg: '#0a6f78', fg: '#fff', lines: [{ text: 'കൊച്ചി വാട്ടർ മെട്രോ', size: 1.1 }, { text: 'KOCHI WATER METRO', size: 0.8 }] }));
-    s.add('ksrtcBoard', 512, 110, (c, w, h) => board(c, w, h, { bg: '#9e0d0d', fg: '#f6e9b8', lines: [{ text: 'കെ.എസ്.ആർ.ടി.സി · KSRTC' }] }));
+    s.add('waterMetro', 512, 120, (c, w, h) => board(c, w, h, { bg: '#0a6f78', fg: '#fff', lines: [{ text: 'താമരശ്ശേരി ചുരം വ്യൂപോയിന്റ്', size: 1.1 }, { text: 'CHURAM VIEWPOINT · WAYANAD PASS', size: 0.8 }] }));
+    s.add('ksrtcBoard', 512, 110, (c, w, h) => board(c, w, h, { bg: '#9e0d0d', fg: '#f6e9b8', lines: [{ text: 'കെ.എസ്.ആർ.ടി.സി · KSRTC THAMARASSERY' }] }));
     for (let i = 1; i <= 8; i++) s.add(`bay${i}`, 96, 96, (c, w, h) => {
       c.fillStyle = '#1456a0';
       c.beginPath();
@@ -151,7 +152,7 @@ export class Landmarks {
       c.fillStyle = '#fff';
       fitText(c, String(i), w / 2, h / 2 + 3, 70, 64, 800);
     });
-    // Brototype.
+    // Thamarassery Hub / Bilal Complex (spawning spot)
     s.add('brototype', 1000, 200, (c, w, h) => {
       c.fillStyle = '#0b0b0c';
       c.fillRect(0, 0, w, h);
@@ -160,16 +161,16 @@ export class Landmarks {
       c.fillStyle = '#f2f2f2';
       c.save();
       c.translate(w / 2, h * 0.42);
-      c.scale(1.35, 1);
-      c.font = `900 118px "Arial Black", "Helvetica Neue", Arial, sans-serif`;
+      c.scale(1.2, 1);
+      c.font = `900 95px "Arial Black", "Helvetica Neue", Arial, sans-serif`;
       c.textAlign = 'center';
       c.textBaseline = 'middle';
-      c.fillText('BROTOTYPE', 0, 0);
+      c.fillText('GTA THAMARASSERY', 0, 0);
       c.restore();
-      c.fillStyle = '#bdbdbd';
-      c.font = font(30, 400);
+      c.fillStyle = '#ffd34d';
+      c.font = font(32, 700);
       c.textAlign = 'center';
-      c.fillText('BROTHER YOU NEVER HAD   ·   ബ്രോട്ടോടൈപ്പ്', w / 2, h * 0.8);
+      c.fillText('താമരശ്ശേരി ഹബ്ബ് · KOZHIKODE', w / 2, h * 0.8);
     });
     s.add('brototypeBlade', 128, 512, (c, w, h) => {
       c.fillStyle = '#e11d2e';
@@ -178,13 +179,15 @@ export class Landmarks {
       c.translate(w / 2, h / 2);
       c.rotate(-Math.PI / 2);
       c.fillStyle = '#fff';
-      c.font = `900 78px "Arial Black", Arial, sans-serif`;
+      c.font = `900 64px "Arial Black", Arial, sans-serif`;
       c.textAlign = 'center';
       c.textBaseline = 'middle';
-      c.fillText('BROTOTYPE', 0, 4);
+      c.fillText('THAMARASSERY', 0, 4);
       c.restore();
     });
-    s.add('crowne', 512, 110, (c, w, h) => board(c, w, h, { bg: '#5a1233', fg: '#fff', lines: [{ text: 'CROWNE PLAZA', size: 1.3 }, { text: 'K O C H I', size: 0.6, weight: 400 }] }));
+    s.add('crowne', 512, 110, (c, w, h) => board(c, w, h, { bg: '#0a1d37', fg: '#ffd34d', border: '#e11d2e', lines: [{ text: 'കേരള പോലീസ് · താമരശ്ശേരി', size: 1.15 }, { text: 'KERALA POLICE STATION · THAMARASSERY', size: 0.8 }] }));
+    s.add('policeStation', 512, 110, (c, w, h) => board(c, w, h, { bg: '#0a1d37', fg: '#ffd34d', border: '#e11d2e', lines: [{ text: 'കേരള പോലീസ് · താമരശ്ശേരി', size: 1.15 }, { text: 'KERALA POLICE STATION · THAMARASSERY', size: 0.8 }] }));
+    s.add('teaShop', 512, 110, (c, w, h) => board(c, w, h, { bg: '#7a190b', fg: '#fff', border: '#ffd34d', lines: [{ text: 'മലബാർ ടീ സ്റ്റാൾ · MALABAR TEA HOTEL', size: 1.15 }, { text: 'CHAYA · KADI · POROTTA · BEEF', size: 0.75 }] }));
     // Metro station name boards.
     const metro = this.world.metro;
     if (metro) {
@@ -201,7 +204,7 @@ export class Landmarks {
             c.arc(40, h / 2, 27, 0, TAU);
             c.fill();
             c.fillStyle = '#0d6f6a';
-            fitText(c, 'M', 40, h / 2 + 2, 40, 38, 800);
+            fitText(c, 'T', 40, h / 2 + 2, 40, 38, 800);
             c.fillStyle = '#fff';
             fitText(c, st.ml, 80 + 215, h / 2 + 2, 420, 52, 800);
             fitText(c, st.name.toUpperCase(), 520 + 235, h / 2 + 2, 460, 44, 700);
@@ -224,21 +227,21 @@ export class Landmarks {
     }
     // Direction boards on the approaches.
     const dirs = [
-      ['dir_V_n', ['↑ ഇടപ്പള്ളി · EDAPPALLY', '← കടവന്ത്ര · KADAVANTHRA', '→ തൃപ്പൂണിത്തുറ · THRIPPUNITHURA']],
-      ['dir_V_s', ['↑ ആലപ്പുഴ · ALAPPUZHA', '← തൃപ്പൂണിത്തുറ · THRIPPUNITHURA', '→ എറണാകുളം · ERNAKULAM']],
-      ['dir_K_n', ['↑ വൈറ്റില · VYTTILA', '← തേവര · THEVARA', '→ മരട് · MARADU']],
-      ['dir_K_s', ['↑ അരൂർ · AROOR', '← മരട് · MARADU', '→ വില്ലിംഗ്ടൺ ഐലൻഡ് · W. ISLAND']],
-      ['dir_PB_n', ['↑ ഇടപ്പള്ളി · EDAPPALLY', '← കലൂർ · KALOOR', '→ കാക്കനാട് · KAKKANAD']],
-      ['dir_PB_s', ['↑ വൈറ്റില · VYTTILA', '← കാക്കനാട് · KAKKANAD', '→ കലൂർ · KALOOR']],
-      ['dir_E_n', ['↑ ആലുവ · ALUVA', '← ഗുരുവായൂർ · GURUVAYUR', '→ ലുലു മാൾ · LuLu MALL']],
-      ['dir_E_s', ['↑ വൈറ്റില · VYTTILA', '→ പാലാരിവട്ടം · PALARIVATTOM', '← ചേരാനല്ലൂർ · CHERANALLOOR']],
+      ['dir_V_n', ['↑ ചുരം · CHURAM PASS', '← കുന്നമംഗലം · KUNNAMANGALAM', '→ മുക്കം · MUKKAM']],
+      ['dir_V_s', ['↑ കോഴിക്കോട് · KOZHIKODE', '← മുക്കം · MUKKAM', '→ കാരടി · KARADI']],
+      ['dir_K_n', ['↑ ചുങ്കം · CHUNGAM', '← കുന്നമംഗലം · KUNNAMANGALAM', '→ കൈതപ്പൊയിൽ · KAITHAPOYIL']],
+      ['dir_K_s', ['↑ കോഴിക്കോട് · KOZHIKODE', '← കാരടി · KARADI', '→ അടിവാരം · ADIVARAM']],
+      ['dir_PB_n', ['↑ ചുരം കവാടം · CHURAM GATEWAY', '← കൊടുവള്ളി · KODUVALLY', '→ ഈങ്ങാപ്പുഴ · ENGAPUZHA']],
+      ['dir_PB_s', ['↑ ചുങ്കം · CHUNGAM', '← ഈങ്ങാപ്പുഴ · ENGAPUZHA', '→ കൊടുവള്ളി · KODUVALLY']],
+      ['dir_E_n', ['↑ വയനാട് · WAYANAD', '← ബാലുശ്ശേരി · BALUSSERY', '→ ചുരം വ്യൂ · CHURAM VIEW']],
+      ['dir_E_s', ['↑ ചുങ്കം · CHUNGAM', '→ ഈങ്ങാപ്പുഴ · ENGAPUZHA', '← പുതുപ്പാടി · PUDUPPADI']],
     ];
     for (const [id, lines] of dirs) {
       s.add(id, 512, 230, (c, w, h) => board(c, w, h, { bg: '#0c6b3d', fg: '#fff', border: '#fff', radius: 12, lines: lines.map((t) => ({ text: t })) }));
     }
     s.add('busStop', 256, 96, (c, w, h) => board(c, w, h, { bg: '#1456a0', fg: '#fff', lines: [{ text: 'ബസ് സ്റ്റോപ്പ്', size: 1.1 }, { text: 'BUS STOP', size: 0.7 }], radius: 6 }));
     s.add('autoStand', 256, 96, (c, w, h) => board(c, w, h, { bg: '#f2c313', fg: '#111', lines: [{ text: 'ഓട്ടോ സ്റ്റാൻഡ്', size: 1.1 }, { text: 'AUTO STAND', size: 0.7 }], radius: 6 }));
-    s.add('welcome', 512, 140, (c, w, h) => board(c, w, h, { bg: '#0b5f8a', fg: '#fff', border: '#fff', lines: [{ text: 'കൊച്ചിയിലേക്ക് സ്വാഗതം', size: 1.1 }, { text: 'WELCOME TO KOCHI', size: 0.8 }] }));
+    s.add('welcome', 512, 140, (c, w, h) => board(c, w, h, { bg: '#0b5f8a', fg: '#fff', border: '#fff', lines: [{ text: 'താമരശ്ശേരിയിലേക്ക് സ്വാഗതം', size: 1.1 }, { text: 'WELCOME TO THAMARASSERY · KOZHIKODE', size: 0.75 }] }));
     s.add('speed', 128, 128, (c, w, h) => {
       c.fillStyle = '#fff';
       c.beginPath();
@@ -252,8 +255,8 @@ export class Landmarks {
       c.fillStyle = '#111';
       fitText(c, '50', w / 2, h / 2 + 4, 80, 64, 800);
     });
-    s.add('oberon', 512, 120, (c, w, h) => board(c, w, h, { bg: '#1a1a1a', fg: '#ffd34d', lines: [{ text: 'ഒബ്രോൺ മാൾ', size: 1.1 }, { text: 'OBERON MALL', size: 0.8 }] }));
-    s.add('goldsouk', 512, 120, (c, w, h) => board(c, w, h, { bg: '#3a2408', fg: '#f5d37a', lines: [{ text: 'GOLD SOUK GRANDE', size: 1 }, { text: 'VYTTILA', size: 0.6, weight: 400 }] }));
+    s.add('oberon', 512, 120, (c, w, h) => board(c, w, h, { bg: '#1a1a1a', fg: '#ffd34d', lines: [{ text: 'ചുങ്കം മാൾ', size: 1.1 }, { text: 'CHUNGAM MALL', size: 0.8 }] }));
+    s.add('goldsouk', 512, 120, (c, w, h) => board(c, w, h, { bg: '#3a2408', fg: '#f5d37a', lines: [{ text: 'THAMARASSERY GOLD MALL', size: 1 }, { text: 'CHUNGAM', size: 0.6, weight: 400 }] }));
   }
 
   // --------------------------------------------------------------------------- helpers
@@ -355,6 +358,42 @@ export class Landmarks {
     this.colliders.addBox(c[0], c[2], sx / 2, sz / 2, fr.rot, -2, h, tag);
   }
 
+  hollowSolid(fr, lx, lz, sx, sz, h, tag, doorWidth = 6, doorOffset = 0) {
+    const wallThick = 0.8;
+    const halfX = sx / 2;
+    const halfZ = sz / 2;
+    const c = fr.P(lx, 0, lz);
+    this.surface.rect(c[0], c[2], halfX, halfZ, fr.rot, SURF.PAVED, [SURF.ROAD, SURF.BUILDING]);
+
+    // Back wall (-Z)
+    const back = fr.P(lx, 0, lz - halfZ + wallThick / 2);
+    this.colliders.addBox(back[0], back[2], halfX, wallThick / 2, fr.rot, -2, h, `${tag}-back`);
+
+    // Left wall (-X)
+    const left = fr.P(lx - halfX + wallThick / 2, 0, lz);
+    this.colliders.addBox(left[0], left[2], wallThick / 2, halfZ, fr.rot, -2, h, `${tag}-left`);
+
+    // Right wall (+X)
+    const right = fr.P(lx + halfX - wallThick / 2, 0, lz);
+    this.colliders.addBox(right[0], right[2], wallThick / 2, halfZ, fr.rot, -2, h, `${tag}-right`);
+
+    // Front wall (+Z) with doorway opening
+    const frontZ = lz + halfZ - wallThick / 2;
+    const halfDoor = doorWidth / 2;
+    const segLeftWidth = halfX + (doorOffset - halfDoor);
+    if (segLeftWidth > 0.5) {
+      const segLeftX = lx - halfX + segLeftWidth / 2;
+      const frontL = fr.P(segLeftX, 0, frontZ);
+      this.colliders.addBox(frontL[0], frontL[2], segLeftWidth / 2, wallThick / 2, fr.rot, -2, h, `${tag}-front-l`);
+    }
+    const segRightWidth = halfX - (doorOffset + halfDoor);
+    if (segRightWidth > 0.5) {
+      const segRightX = lx + halfX - segRightWidth / 2;
+      const frontR = fr.P(segRightX, 0, frontZ);
+      this.colliders.addBox(frontR[0], frontR[2], segRightWidth / 2, wallThick / 2, fr.rot, -2, h, `${tag}-front-r`);
+    }
+  }
+
   paved(fr, lx, lz, sx, sz) {
     const c = fr.P(lx, 0, lz);
     this.surface.rect(c[0], c[2], sx / 2, sz / 2, fr.rot, SURF.PAVED, [SURF.ROAD, SURF.SIDEWALK, SURF.BUILDING, SURF.MEDIAN]);
@@ -416,8 +455,19 @@ export class Landmarks {
     const ah = 28;
     const az = z0 + D / 2 + ad / 2 - 3;
     this.facadeBox('glassWall', fr, 0, 0, az, aw, ah, ad, 'z');
-    this.solid(fr, 0, az, aw, ad, ah, 'lulu-atrium');
+    this.hollowSolid(fr, 0, az, aw, ad, ah, 'lulu-atrium', 8.0);
     this.box('white', fr, 0, ah, az, aw + 1, 0.6, ad + 1, { faces: 'xXzZYy' });
+
+    // Enterable Grand Atrium of Churam Mall
+    this.slab('pavers', fr, 0, 0.05, az, aw - 2, ad - 2, 1.2, [0.98, 0.98, 0.96]);
+    // Central Mall fountain & plant basin
+    this.box('concreteLm', fr, 0, 0, az, 8, 0.7, 6, { faces: 'xXzZYy' });
+    this.box('glassDark', fr, 0, 0.6, az, 7.2, 0.2, 5.2, { faces: 'Y' });
+    // Shopping kiosks along both sides
+    for (const sx of [-14, 14]) {
+      this.box('charcoal', fr, sx, 0, az - 2, 6, 1.2, 2.5, { faces: 'xXzZYy' });
+      this.box('charcoal', fr, sx, 0, az + 3, 6, 1.2, 2.5, { faces: 'xXzZYy' });
+    }
     for (const s of [-1, 1]) this.box('luluStone', fr, s * (aw / 2 + 1.5), 0, az, 3, ah + 2, ad + 1, { tile: 8 });
     for (let i = -2; i <= 2; i++) {
       const p = fr.P(i * 9, 0, az - 2);
@@ -516,6 +566,34 @@ export class Landmarks {
     this.box('black', fr, 0, 5.3, front + 3.6, 58, 0.8, 7.4, { faces: 'xXzZYy' });
     this.sign('forumCanopy', fr, 0, 5.35, front + 7.32, 20, 'Z');
     for (const s of [-1, 1]) for (const x of [10, 27]) this.pole(fr, s * x, front + 6.6, 5.3, 0.22, 'chrome');
+
+    // ================= Malabar Tea Stall & Hotel (Chaya Kada) =================
+    const teaFr = frame(c[0] + 52, c[1] + 28, 0, 1);
+    const tw = 14;
+    const td = 10;
+    const th = 4.2;
+    this.box('charcoal', teaFr, 0, 0, 0, tw, th, td, { faces: 'xXzYy' });
+    this.slab('roofFlat', teaFr, 0, th, 0, tw + 0.6, td + 0.6, 2);
+    this.hollowSolid(teaFr, 0, 0, tw, td, th + 1, 'malabar-tea-hotel', 6.0);
+    this.sign('teaShop', teaFr, 0, th - 0.7, td / 2 + 0.08, 11, 'Z');
+    // Striped Awning over front entrance
+    this.box('terracotta', teaFr, 0, 3.3, td / 2 + 1.4, tw + 0.8, 0.15, 2.8, { faces: 'xXzZYy' });
+    // Interior floor
+    this.slab('pavers', teaFr, 0, 0.05, 0, tw - 1.2, td - 1.2, 1.2, [0.95, 0.88, 0.82]);
+    // Traditional Stainless Steel Tea Counter & Samovar (Boiler)
+    this.box('chrome', teaFr, -3.2, 0, 2.2, 3.8, 1.15, 1.4, { faces: 'xXzZYy' });
+    this.box('chrome', teaFr, -4.2, 1.15, 2.2, 0.8, 0.9, 0.8, { faces: 'xXzZYy' });
+    // Glass pastry showcase (pazhampori, samosas)
+    this.box('glassDark', teaFr, -2.0, 1.15, 2.2, 1.6, 0.6, 0.9, { faces: 'xXzZYy' });
+    // Dining tables with wooden benches
+    for (const tx of [2.2, 5.0]) {
+      this.box('charcoal', teaFr, tx, 0, 1.5, 2.2, 0.9, 1.2, { faces: 'xXzZYy' });
+      this.box('terracotta', teaFr, tx, 0, 0.3, 2.2, 0.5, 0.45, { faces: 'xXzZYy' });
+      this.box('terracotta', teaFr, tx, 0, 2.7, 2.2, 0.5, 0.45, { faces: 'xXzZYy' });
+      this.box('charcoal', teaFr, tx, 0, -2.2, 2.2, 0.9, 1.2, { faces: 'xXzZYy' });
+      this.box('terracotta', teaFr, tx, 0, -3.4, 2.2, 0.5, 0.45, { faces: 'xXzZYy' });
+      this.box('terracotta', teaFr, tx, 0, -1.0, 2.2, 0.5, 0.45, { faces: 'xXzZYy' });
+    }
     // The signature facade: green / yellow leaf panels behind white vertical fins.
     const fw = 52;
     const fy0 = 6.4;
@@ -794,10 +872,20 @@ export class Landmarks {
     this.slab('pavers', fr, 0, 0.075, 95, total + 50, 110, 1.5, [0.78, 0.76, 0.74]);
     this.slab('pavers', fr, 0, 0.08, -24, total + 30, 48, 1.5);
     this.paved(fr, 0, 40, total + 56, 230);
-    // Waiting hall and shops behind the platform.
     this.box('white', fr, 0, 0, -16, total, 6.2, 12, { tile: 4 });
     this.slab('roofFlat', fr, 0, 6.2, -16, total, 12, 4);
-    this.solid(fr, 0, -16, total, 12, 6.5, 'hub-hall');
+    this.hollowSolid(fr, 0, -16, total, 12, 6.5, 'hub-hall', 28);
+
+    // Enterable KSRTC Passenger Waiting Lounge
+    this.slab('pavers', fr, 0, 0.05, -16, total - 2, 11, 1.2, [0.93, 0.93, 0.9]);
+    // Rows of waiting passenger benches
+    for (let bi = -4; bi <= 4; bi += 2) {
+      this.box('steel', fr, bi * 12, 0, -15.5, 8, 0.55, 0.9, { faces: 'xXzZYy' });
+      this.box('steel', fr, bi * 12, 0, -18.5, 8, 0.55, 0.9, { faces: 'xXzZYy' });
+    }
+    // Ticket Booking & Inquiry Counter
+    this.box('charcoal', fr, 0, 0, -12, 14, 1.2, 1.4, { faces: 'xXzZYy' });
+    this.box('glassDark', fr, 0, 1.2, -12, 13.6, 1.2, 0.1, { faces: 'xXzZY' });
     const shopRow = (z, n) => {
       for (let i = 0; i < n; i++) {
         const x0 = -total / 2 + (i * total) / n;
@@ -975,10 +1063,40 @@ export class Landmarks {
     this.paved(fr, 0, front + 9, W + 16, 18);
     // Body: dark frame, glass curtain wall between.
     this.facadeBox('charcoal', fr, 0, 0, 0, W, H + 1.2, D, 'Z');
-    this.solid(fr, 0, 0, W, D, H + 2, 'brototype');
+    this.hollowSolid(fr, 0, 0, W, D, H + 2, 'brototype', 6.0);
     this.slab('roofFlat', fr, 0, H + 1.2, 0, W, D, 4);
+
+    // Front glass with open 6m wide entrance doorway in center
     const g = this.use('glassDark', fr);
-    g.quad(fr.P(-W / 2 + 2.2, 0.1, front), fr.P(W / 2 - 2.2, 0.1, front), fr.P(W / 2 - 2.2, H - 2.2, front), fr.P(-W / 2 + 2.2, H - 2.2, front), [[0, 0], [2, 0], [2, (H - 2.3) / (FLOOR * 4)], [0, (H - 2.3) / (FLOOR * 4)]], fr.N(0, 1));
+    // Left glass wing
+    g.quad(fr.P(-W / 2 + 2.2, 0.1, front), fr.P(-3.0, 0.1, front), fr.P(-3.0, H - 2.2, front), fr.P(-W / 2 + 2.2, H - 2.2, front), [[0, 0], [1.2, 0], [1.2, 1], [0, 1]], fr.N(0, 1));
+    // Right glass wing
+    g.quad(fr.P(3.0, 0.1, front), fr.P(W / 2 - 2.2, 0.1, front), fr.P(W / 2 - 2.2, H - 2.2, front), fr.P(3.0, H - 2.2, front), [[0, 0], [1.2, 0], [1.2, 1], [0, 1]], fr.N(0, 1));
+    // Transom glass above 3m doorway
+    g.quad(fr.P(-3.0, 3.0, front), fr.P(3.0, 3.0, front), fr.P(3.0, H - 2.2, front), fr.P(-3.0, H - 2.2, front), [[0, 0], [1, 0], [1, 0.8], [0, 0.8]], fr.N(0, 1));
+
+    // Interior floor and furniture inside Bilal Complex / Thamarassery Hub
+    this.slab('pavers', fr, 0, 0.05, 0, W - 1.2, D - 1.2, 1.2, [0.96, 0.96, 0.94]);
+    // Reception & Security desk
+    this.box('charcoal', fr, 0, 0, 3.2, 4.4, 1.15, 1.5, { faces: 'xXzZYy' });
+    this.box('black', fr, 0, 1.15, 3.2, 1.4, 0.65, 0.2, { faces: 'xXzZYy' });
+    // Waiting Lounge Sofas
+    this.box('red', fr, -7.5, 0, 2.5, 3.2, 0.75, 1.4, { faces: 'xXzZYy' });
+    this.box('red', fr, 7.5, 0, 2.5, 3.2, 0.75, 1.4, { faces: 'xXzZYy' });
+    // Workstations & Dev Desks
+    this.box('white', fr, -6, 0, -4, 5.5, 0.95, 1.8, { faces: 'xXzZYy' });
+    this.box('white', fr, 6, 0, -4, 5.5, 0.95, 1.8, { faces: 'xXzZYy' });
+    this.box('black', fr, -6, 0.95, -4, 2.2, 0.6, 0.2, { faces: 'xXzZYy' });
+    this.box('black', fr, 6, 0.95, -4, 2.2, 0.6, 0.2, { faces: 'xXzZYy' });
+    // Potted indoor palm planters
+    this.box('terracotta', fr, -10.5, 0, 4.5, 0.9, 0.85, 0.9, { faces: 'xXzZYy' });
+    this.box('terracotta', fr, 10.5, 0, 4.5, 0.9, 0.85, 0.9, { faces: 'xXzZYy' });
+    // Warm overhead ceiling light fixtures
+    this.box('lamp', fr, 0, 3.5, 0, 3.5, 0.1, 7);
+    this.box('lamp', fr, -6, 3.5, -3, 2.5, 0.1, 4.5);
+    this.box('lamp', fr, 6, 3.5, -3, 2.5, 0.1, 4.5);
+    this.sign('brototype', fr, 0, 2.4, -D / 2 + 0.35, 7.5, 'Z');
+
     for (const s of [-1, 1]) this.box('charcoal', fr, s * (W / 2 - 1.1), 0, front + 0.2, 2.2, H + 1.2, 0.5, { faces: 'xXZ', tile: 6 });
     this.box('black', fr, 0, H - 2.2, front + 0.22, W - 4.4, 3.4, 0.5, { faces: 'xXZYy' });
     for (let k = 1; k < floors; k++) this.box('black', fr, 0, 3.4 + (k - 1) * FLOOR, front + 0.12, W - 4.4, 0.22, 0.28, { faces: 'ZYy' });
@@ -998,7 +1116,7 @@ export class Landmarks {
     this.brototypeFrame = fr;
   }
 
-  // ===================================================================== Crowne Plaza
+  // ===================================================================== Thamarassery Police Station
   _crowne() {
     const c = LANDMARKS.crowne.p;
     const k = NODES.K.p;
@@ -1008,9 +1126,25 @@ export class Landmarks {
     this.facadeBox('hotelCream', fr, 0, 8, -2, 40, H - 8, 22);
     this.box('luluBand', fr, 0, H, -2, 41, 2.6, 23, { tile: 8 });
     this.slab('roofFlat', fr, 0, H + 2.6, -2, 41, 23, 4);
-    this.solid(fr, 0, 0, 44, 30, H + 4, 'crowne');
+    this.hollowSolid(fr, 0, 0, 44, 30, H + 4, 'police-station', 6.0);
+    this.sign('policeStation', fr, 0, 7.8, 15.1, 16, 'Z');
     this.sign('crowne', fr, 0, H - 1.2, 9.1, 17, 'Z');
-    this.sign('crowne', fr, 0, 8.4, 15.1, 13, 'Z');
+
+    // Interior floor of Police Station
+    this.slab('pavers', fr, 0, 0.05, 0, 42, 28, 1.2, [0.91, 0.93, 0.95]);
+    // Duty Officer charge desk
+    this.box('charcoal', fr, 0, 0, 4, 4.8, 1.15, 1.6, { faces: 'xXzZYy' });
+    this.box('black', fr, 0, 1.15, 4, 1.2, 0.6, 0.2, { faces: 'xXzZYy' });
+    // Police Lockup / Jail Cell with metal bars
+    this.box('concreteLm', fr, -14, 0, -4, 0.4, 3.5, 12, { faces: 'xXzZY' });
+    this.box('concreteLm', fr, -8, 0, -10, 12, 3.5, 0.4, { faces: 'xXzZY' });
+    for (let bx = -13.5; bx <= -7; bx += 0.5) this.pole(fr, bx, 2, 3.5, 0.04, 'steel');
+    this.box('charcoal', fr, -11, 0, -4, 2.2, 0.5, 1.1, { faces: 'xXzZYy' });
+    // Officer office desks and filing cabinets
+    this.box('white', fr, 8, 0, -2, 5, 0.95, 2, { faces: 'xXzZYy' });
+    this.box('white', fr, 8, 0.95, -2, 1.8, 0.6, 0.2, { faces: 'xXzZYy' });
+    this.box('steel', fr, 13, 0, -2, 1.4, 2.2, 1.1, { faces: 'xXzZYy' });
+
     this.slab('pavers', fr, 0, 0.08, 26, 60, 22, 1.5);
     this.paved(fr, 0, 26, 60, 22);
     this.box('white', fr, 0, 5.4, 19.5, 18, 0.5, 9, { faces: 'xXzZYy' });

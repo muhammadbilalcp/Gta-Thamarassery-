@@ -248,6 +248,38 @@ export class AudioManager {
     if (s > 0.5) this._burst({ freq: 5200, q: 2, dur: 0.45, gain: 0.12 * s, type: 'bandpass' });
   }
 
+  punch() {
+    this._burst({ freq: 850, q: 1.2, dur: 0.11, gain: 0.18, type: 'bandpass', sweep: -400 });
+  }
+
+  punchHit() {
+    this._burst({ freq: 220, q: 0.8, dur: 0.16, gain: 0.45, type: 'lowpass', sweep: -140 });
+    this._burst({ freq: 1100, q: 2.5, dur: 0.08, gain: 0.22, type: 'bandpass' });
+    this._tone({ freq: 140, freq2: 45, dur: 0.18, gain: 0.35, type: 'triangle' });
+  }
+
+  setPoliceSiren(active) {
+    if (!this.ctx) return;
+    if (!this.siren) {
+      const c = this.ctx;
+      const osc = c.createOscillator();
+      osc.type = 'sawtooth';
+      const gain = c.createGain();
+      gain.gain.value = 0;
+      const filter = c.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.value = 1600;
+      osc.connect(filter).connect(gain).connect(this.master);
+      osc.start();
+      this.siren = { osc, gain, t: 0 };
+    }
+    this.sirenActive = active;
+  }
+
+  busted() {
+    this._tone({ freq: 180, freq2: 40, dur: 1.2, gain: 0.45, type: 'sawtooth' });
+  }
+
   setHorn(on, kind = 'car') {
     if (!this.ctx) return;
     const t = this.ctx.currentTime;
@@ -302,6 +334,18 @@ export class AudioManager {
     }
     this.bedGain.gain.setTargetAtTime(vehicle ? 0.1 : 0.17, t, 0.5);
 
+    // Police siren modulation
+    if (this.siren) {
+      if (this.sirenActive) {
+        this.siren.t += dt * 4.5;
+        const sirenFreq = 720 + Math.sin(this.siren.t) * 240;
+        this.siren.osc.frequency.setTargetAtTime(sirenFreq, t, 0.02);
+        this.siren.gain.gain.setTargetAtTime(0.09, t, 0.04);
+      } else {
+        this.siren.gain.gain.setTargetAtTime(0, t, 0.08);
+      }
+    }
+
     // Passing traffic.
     for (let i = 0; i < this.voices.length; i++) {
       const voice = this.voices[i];
@@ -347,5 +391,11 @@ export class AudioManager {
         this._tone({ freq: 640, freq2: 470, dur: 0.24, gain: 0.011, type: 'sawtooth', pan, delay: k * 0.34, attack: 0.03 });
       }
     }
+  }
+
+  dispose() {
+    try {
+      this.ctx?.close();
+    } catch {}
   }
 }

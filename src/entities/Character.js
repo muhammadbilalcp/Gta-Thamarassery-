@@ -325,11 +325,63 @@ export class Character {
       world.set(b, target);
       b.quaternion.copy(parentWorld.clone().invert().multiply(target));
     });
+    this.punchTime = 0;
+    this.punchDuration = 0.38;
+    this.punchSide = 'right';
+  }
+
+  triggerPunch(side = 'right') {
+    this.punchSide = side;
+    this.punchTime = this.punchDuration;
   }
 
   update(dt) {
     if (this.pose) return;
     this.mixer.update(dt);
+
+    // Procedural punch animation overlay
+    if (this.punchTime > 0) {
+      this.punchTime -= dt;
+      const progress = 1 - Math.max(0, this.punchTime) / this.punchDuration;
+      // Punch curve: fast snap forward (0 to 30%), smooth recoil back (30% to 100%)
+      const punchAmt = progress < 0.3 ? progress / 0.3 : Math.max(0, 1 - (progress - 0.3) / 0.7);
+
+      const isRight = this.punchSide === 'right';
+      const armName = isRight ? 'RightArm' : 'LeftArm';
+      const forearmName = isRight ? 'RightForeArm' : 'LeftForeArm';
+      const guardArmName = isRight ? 'LeftArm' : 'RightArm';
+      const guardForearmName = isRight ? 'LeftForeArm' : 'RightForeArm';
+
+      // Torso twists into punch
+      const spine = this.bones.get('Spine1') || this.bones.get('Spine');
+      if (spine) {
+        spine.rotation.y += (isRight ? -0.42 : 0.42) * punchAmt;
+        spine.rotation.x += 0.12 * punchAmt;
+      }
+
+      // Punching arm thrusts forward
+      const arm = this.bones.get(armName);
+      if (arm) {
+        arm.rotation.x += -1.45 * punchAmt;
+        arm.rotation.z += (isRight ? -0.35 : 0.35) * punchAmt;
+      }
+      const forearm = this.bones.get(forearmName);
+      if (forearm) {
+        forearm.rotation.x += -0.55 * punchAmt;
+        forearm.rotation.y += (isRight ? 0.35 : -0.35) * punchAmt;
+      }
+
+      // Guard arm defends chest and chin
+      const guardArm = this.bones.get(guardArmName);
+      if (guardArm) {
+        guardArm.rotation.x += -0.85 * punchAmt;
+        guardArm.rotation.z += (isRight ? 0.3 : -0.3) * punchAmt;
+      }
+      const guardForearm = this.bones.get(guardForearmName);
+      if (guardForearm) {
+        guardForearm.rotation.x += -1.15 * punchAmt;
+      }
+    }
   }
 
   setVisible(v) {

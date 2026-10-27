@@ -5,10 +5,10 @@ import * as THREE from 'three';
 import { Character } from './Character.js';
 import { angleDiff, clamp, damp, dampAngle } from '../utils/math.js';
 
-const WALK = 1.85;
-const RUN = 6.1;
-const JUMP = 5.6;
-const GRAVITY = 17;
+const WALK = 2.2;
+const RUN = 6.8;
+const JUMP = 6.8;
+const GRAVITY = 18.5;
 const RADIUS = 0.34;
 const _hit = { nx: 0, nz: 0, depth: 0 };
 const _door = new THREE.Vector3();
@@ -29,6 +29,43 @@ export class Player {
     this.inWater = false;
     this.object.position.copy(this.pos);
     this.object.rotation.y = heading;
+    this.health = 100;
+    this.maxHealth = 100;
+    this.punchCooldown = 0;
+    this.combo = 0;
+  }
+
+  takeDamage(amount) {
+    if (this.health <= 0) return;
+    this.health = Math.max(0, this.health - amount);
+    this.game.hud?.setHealth(this.health);
+    this.game.cameraController?.addShake(0.35);
+    this.game.flashDamage?.();
+    if (this.health <= 0) {
+      this.game.policeSystem?.triggerBusted('WASTED');
+    }
+  }
+
+  punch() {
+    this.punchCooldown = 0.3;
+    this.combo = (this.combo + 1) % 2;
+    const side = this.combo === 0 ? 'right' : 'left';
+    this.character.triggerPunch(side);
+    this.game.audio?.punch();
+
+    // Slight lunge forward
+    const fx = Math.sin(this.heading);
+    const fz = Math.cos(this.heading);
+    this.vel.x += fx * 2.2;
+    this.vel.z += fz * 2.2;
+
+    // Check hit against pedestrians and police officers
+    const hitTarget = this.game.checkCombatHit(this.pos, this.heading, 2.2);
+    if (hitTarget) {
+      this.game.audio?.punchHit();
+      this.game.cameraController?.addShake(0.24);
+      this.game.spawnHitEffect?.(hitTarget.x, hitTarget.y + 1.2, hitTarget.z);
+    }
   }
 
   get driving() {
@@ -40,6 +77,13 @@ export class Player {
       this._ride();
       return;
     }
+
+    // Punch attack
+    this.punchCooldown = Math.max(0, this.punchCooldown - dt);
+    if (!this.vehicle && (input.hit('KeyF') || input.hit('KeyJ') || input.hit('VirtualPunch')) && this.punchCooldown <= 0) {
+      this.punch();
+    }
+
     const world = this.game.world;
     // Camera-relative movement. Camera forward on the ground plane is (-sin yaw, -cos yaw).
     const mx = input.moveX;
@@ -58,7 +102,7 @@ export class Player {
     }
     const wade = this.inWater ? 0.45 : 1;
     const target = moving ? (input.sprint ? RUN : WALK) * wade : 0;
-    const rate = this.grounded ? (moving ? 11 : 14) : 2.2;
+    const rate = this.grounded ? (moving ? 12 : 15) : 8.5;
     this.vel.x = damp(this.vel.x, dx * target, rate, dt);
     this.vel.z = damp(this.vel.z, dz * target, rate, dt);
     this.speed = Math.hypot(this.vel.x, this.vel.z);
@@ -69,13 +113,18 @@ export class Player {
       this.heading = dampAngle(this.heading, want, turn > 2 ? 18 : 12, dt);
     }
 
-    // Jump (a little coyote time makes kerb edges forgiving).
-    this.coyote = this.grounded ? 0.12 : Math.max(0, this.coyote - dt);
+    // Jump with authentic forward leap momentum
+    this.coyote = this.grounded ? 0.15 : Math.max(0, this.coyote - dt);
     if (input.hit('Space') && this.coyote > 0 && !this.inWater) {
       this.vel.y = JUMP;
       this.grounded = false;
       this.coyote = 0;
-      this.game.audio?.step(1.2);
+      if (moving) {
+        const leapSpeed = (input.sprint ? RUN : WALK) * 1.05;
+        this.vel.x = dx * leapSpeed;
+        this.vel.z = dz * leapSpeed;
+      }
+      this.game.audio?.step(1.3);
     }
 
     this.pos.x += this.vel.x * dt;

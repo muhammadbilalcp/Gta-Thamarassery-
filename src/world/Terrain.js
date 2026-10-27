@@ -1,5 +1,5 @@
-// Terrain height field. Kochi is flat and barely above sea level, so the land is a
-// plane at y = 0 and the only relief is where it slopes down into backwaters and canals.
+// Terrain height field. Thamarassery lies at the foot of the Western Ghats (Churam),
+// with gentle Malabar river valleys and rolling roadside land.
 
 import { WATER, WORLD } from './layout.js';
 import { clamp, signedDistPolygon, distToPolyline } from '../utils/math.js';

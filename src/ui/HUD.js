@@ -8,11 +8,11 @@ const $ = (id) => document.getElementById(id);
 const MAP_SCALE = 0.5; // map pixels per metre
 
 const POIS = [
-  { key: 'lulu', label: 'LuLu Mall', ml: 'ലുലു മാൾ', icon: '🛍' },
-  { key: 'stadium', label: 'JLN Stadium', ml: 'കലൂർ സ്റ്റേഡിയം', icon: '🏟' },
-  { key: 'hub', label: 'Vyttila Mobility Hub', ml: 'വൈറ്റില ഹബ്', icon: '🚌' },
-  { key: 'forum', label: 'Forum Kochi', ml: 'ഫോറം', icon: '🛒' },
-  { key: 'brototype', label: 'Brototype', ml: 'ബ്രോട്ടോടൈപ്പ്', icon: '💻' },
+  { key: 'lulu', label: 'Churam Gateway', ml: 'താമരശ്ശേരി ചുരം', icon: 'CH' },
+  { key: 'stadium', label: 'Thamarassery Stadium', ml: 'സ്റ്റേഡിയം', icon: 'ST' },
+  { key: 'hub', label: 'KSRTC Thamarassery Depot', ml: 'കെ.എസ്.ആർ.ടി.സി ഡിപ്പോ', icon: 'KT' },
+  { key: 'forum', label: 'Chungam Junction', ml: 'ചുങ്കം ജംഗ്ഷൻ', icon: 'CJ' },
+  { key: 'brototype', label: 'Thamarassery Hub', ml: 'താമരശ്ശേരി ഹബ്ബ്', icon: 'TH' },
 ];
 
 export class HUD {
@@ -179,7 +179,7 @@ export class HUD {
       b.arc(x, y, 13, 0, Math.PI * 2);
       b.fill();
       b.stroke();
-      b.font = '15px sans-serif';
+      b.font = 'bold 11px sans-serif';
       b.fillStyle = '#111';
       b.fillText(p.icon, x, y + 1);
       b.font = `700 17px ${SIGN_FONT}`;
@@ -329,6 +329,57 @@ export class HUD {
 
   toggleControls() {
     this.el.controls.classList.toggle('faded');
+  }
+
+  setWanted(stars) {
+    const wrap = $('wanted-wrap');
+    if (!wrap) return;
+    if (stars <= 0) {
+      wrap.classList.add('hidden');
+      return;
+    }
+    wrap.classList.remove('hidden');
+    const svgs = wrap.querySelectorAll('svg');
+    svgs.forEach((svg, i) => {
+      if (i < stars) {
+        svg.classList.add('active');
+      } else {
+        svg.classList.remove('active');
+      }
+    });
+  }
+
+  setHealth(hp, maxHp = 100) {
+    const bar = $('health-bar-fill');
+    const label = $('health-label');
+    const pct = Math.max(0, Math.min(100, Math.round((hp / maxHp) * 100)));
+    if (bar) {
+      bar.style.width = `${pct}%`;
+      bar.style.background = pct < 30 ? '#ff3b30' : pct < 60 ? '#ff9500' : '#4cd964';
+    }
+    if (label) {
+      label.textContent = `HP ${Math.round(hp)}`;
+    }
+  }
+
+  showBusted(type = 'BUSTED') {
+    const overlay = $('busted-overlay');
+    const title = $('busted-title');
+    const sub = $('busted-sub');
+    if (title) title.textContent = type;
+    if (sub) {
+      sub.textContent = type === 'BUSTED' 
+        ? 'ARRESTED BY KERALA POLICE · THAMARASSERY' 
+        : 'KNOCKED OUT · ADMITTED TO THAMARASSERY TALUK HOSPITAL';
+    }
+    overlay?.classList.remove('hidden');
+    overlay?.classList.add('active');
+  }
+
+  hideBusted() {
+    const overlay = $('busted-overlay');
+    overlay?.classList.remove('active');
+    overlay?.classList.add('hidden');
   }
 
   update(dt) {

@@ -14,6 +14,7 @@ import { VehicleManager } from './entities/VehicleManager.js';
 import { Player } from './entities/Player.js';
 import { Traffic } from './entities/Traffic.js';
 import { Pedestrians } from './entities/Pedestrians.js';
+import { PoliceSystem } from './entities/PoliceSystem.js';
 import { HUD } from './ui/HUD.js';
 import { clamp, saturate } from './utils/math.js';
 
@@ -60,6 +61,8 @@ export class Game {
     this._pool = [];
     this._poolUsed = 0;
     this._nearby = [];
+    this.policeSystem = null;
+    this._hitEffects = [];
   }
 
   async start() {
@@ -99,6 +102,7 @@ export class Game {
     this.traffic = new Traffic(this);
     this.traffic.populate(this.player.pos);
     this.pedestrians = new Pedestrians(this);
+    this.policeSystem = new PoliceSystem(this);
     this.hud = new HUD(this);
 
     this.pipeline.init(this.scene, this.camera);
@@ -115,22 +119,30 @@ export class Game {
 
     this.running = true;
     this.renderer.setAnimationLoop(() => this.frame());
-    document.getElementById('hud').classList.remove('hidden');
+    const hud = document.getElementById('hud');
+    if (hud) hud.classList.remove('hidden');
     const startBtn = document.getElementById('start');
-    const loading = document.getElementById('loading');
-    const begin = () => {
-      loading.classList.add('fade');
-      this.audio.start();
-      this.audio.resume();
-      this.input.requestLock();
-      setTimeout(() => loading.remove(), 900);
-    };
-    if (this.params.has('autostart')) begin();
+    if (this.params.has('autostart')) this.begin();
     else {
-      startBtn.classList.remove('hidden');
-      status.textContent = 'Kundannoor · outside Brototype';
-      startBtn.addEventListener('click', begin, { once: true });
+      if (startBtn) {
+        startBtn.classList.remove('hidden');
+        startBtn.addEventListener('click', () => this.begin(), { once: true });
+      }
+      if (status) status.textContent = 'Thamarassery Chungam · outside Bilal Complex';
+      this.onReady?.();
     }
+  }
+
+  begin() {
+    const loading = document.getElementById('loading');
+    if (loading) loading.classList.add('fade');
+    this.audio.start();
+    this.audio.resume();
+    this.input.requestLock();
+    setTimeout(() => {
+      if (loading) loading.remove();
+    }, 900);
+    this.onStarted?.();
   }
 
   // ---------------------------------------------------------------------------- loop
@@ -161,6 +173,8 @@ export class Game {
       this.vehicleManager.update(dt, player.pos);
       this.traffic?.update(dt, player.pos);
       this.pedestrians?.update(dt, player.pos);
+      this.policeSystem?.update(dt);
+      this._updateHitEffects(dt);
       if (!this.debugView) this.cameraController.update(dt, input);
       this._updatePrompt();
       this.focus.copy(player.pos);
@@ -488,5 +502,132 @@ export class Game {
       this._showcase.push(v);
     });
     return off;
+  }
+
+  checkCombatHit(pos, heading, range = 2.2) {
+    let nearestHit = null;
+    let minD = range;
+
+    // 1. Pedestrians
+    if (this.pedestrians?.active) {
+      for (const p of this.pedestrians.active) {
+        if (!p.visible && p.idle > 1) continue;
+        const dx = p.x - pos.x;
+        const dz = p.z - pos.z;
+        const dist = Math.hypot(dx, dz);
+        if (dist < minD) {
+          const fx = Math.sin(heading);
+          const fz = Math.cos(heading);
+          const dot = (dx * fx + dz * fz) / (dist || 1);
+          if (dot > 0.15) {
+            minD = dist;
+            nearestHit = { target: p, type: 'ped', x: p.x, y: p.y, z: p.z };
+          }
+        }
+      }
+    }
+
+    // 2. Police officers
+    if (this.policeSystem?.officers) {
+      for (const off of this.policeSystem.officers) {
+        const dx = off.pos.x - pos.x;
+        const dz = off.pos.z - pos.z;
+        const dist = Math.hypot(dx, dz);
+        if (dist < minD) {
+          const fx = Math.sin(heading);
+          const fz = Math.cos(heading);
+          const dot = (dx * fx + dz * fz) / (dist || 1);
+          if (dot > 0.15) {
+            minD = dist;
+            nearestHit = { target: off, type: 'cop', x: off.pos.x, y: off.pos.y, z: off.pos.z };
+          }
+        }
+      }
+    }
+
+    if (nearestHit) {
+      if (nearestHit.type === 'ped') {
+        const p = nearestHit.target;
+        const dx = p.x - pos.x;
+        const dz = p.z - pos.z;
+        const len = Math.hypot(dx, dz) || 1;
+        p.fx = dx / len;
+        p.fz = dz / len;
+        p.x += p.fx * 1.4;
+        p.z += p.fz * 1.4;
+        p.flee = 5.0;
+        p.character?.root?.position.set(p.x, p.y, p.z);
+        this.policeSystem?.addCrime(1);
+      } else if (nearestHit.type === 'cop') {
+        const off = nearestHit.target;
+        const dx = off.pos.x - pos.x;
+        const dz = off.pos.z - pos.z;
+        const len = Math.hypot(dx, dz) || 1;
+        off.pos.x += (dx / len) * 1.6;
+        off.pos.z += (dz / len) * 1.6;
+        off.health -= 35;
+        off.character?.triggerPunch?.('left');
+        this.policeSystem?.addCrime(2);
+        if (off.health <= 0) {
+          if (off.character?.root) this.scene.remove(off.character.root);
+          const idx = this.policeSystem.officers.indexOf(off);
+          if (idx >= 0) this.policeSystem.officers.splice(idx, 1);
+        }
+      }
+      return nearestHit;
+    }
+    return null;
+  }
+
+  spawnHitEffect(x, y, z) {
+    if (!this._hitGeo) {
+      this._hitGeo = new THREE.RingGeometry(0.06, 0.45, 12);
+      this._hitMat = new THREE.MeshBasicMaterial({
+        color: 0xffe044,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.95,
+        depthWrite: false,
+      });
+    }
+    const mesh = new THREE.Mesh(this._hitGeo, this._hitMat.clone());
+    mesh.position.set(x, y, z);
+    mesh.lookAt(this.camera.position);
+    this.scene.add(mesh);
+    this._hitEffects.push({ mesh, life: 0.22, maxLife: 0.22 });
+  }
+
+  _updateHitEffects(dt) {
+    for (let i = this._hitEffects.length - 1; i >= 0; i--) {
+      const ef = this._hitEffects[i];
+      ef.life -= dt;
+      if (ef.life <= 0) {
+        this.scene.remove(ef.mesh);
+        ef.mesh.material?.dispose();
+        this._hitEffects.splice(i, 1);
+      } else {
+        const t = 1 - ef.life / ef.maxLife;
+        const s = 1 + t * 2.4;
+        ef.mesh.scale.set(s, s, s);
+        if (ef.mesh.material) ef.mesh.material.opacity = (1 - t) * 0.95;
+      }
+    }
+  }
+
+  flashDamage() {
+    const flashEl = document.getElementById('hit-flash');
+    if (flashEl) {
+      flashEl.classList.add('flash');
+      setTimeout(() => flashEl.classList.remove('flash'), 180);
+    }
+  }
+
+  dispose() {
+    this.running = false;
+    this.renderer?.setAnimationLoop(null);
+    this.input?.dispose?.();
+    this.audio?.dispose?.();
+    this.pipeline?.dispose?.();
+    this.renderer?.dispose?.();
   }
 }

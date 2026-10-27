@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  server: { host: '127.0.0.1', port: 5173, strictPort: false, open: false },
+  plugins: [react()],
+  server: { host: '0.0.0.0', port: 3000, strictPort: true, open: false },
   build: { target: 'es2022', chunkSizeWarningLimit: 2000 },
 });

@@ -97,8 +97,8 @@ export class RenderPipeline {
     this.composer.addPass(new OutputPass());
     this.grade = new ShaderPass(GradeShader);
     this.composer.addPass(this.grade);
-    this.resize();
-    window.addEventListener('resize', () => this.resize());
+    this._onResize = () => this.resize();
+    window.addEventListener('resize', this._onResize);
   }
 
   resize() {
@@ -136,5 +136,10 @@ export class RenderPipeline {
     this.grade.uniforms.uSpeed.value = speedFactor;
     this.renderer.info.reset();
     this.composer.render(dt);
+  }
+
+  dispose() {
+    window.removeEventListener('resize', this._onResize);
+    this.composer?.dispose?.();
   }
 }

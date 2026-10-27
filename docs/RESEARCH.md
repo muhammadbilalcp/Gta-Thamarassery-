@@ -1,62 +1,28 @@
-# Kochi research notes
+# Thamarassery (Kozhikode) Google Maps Research Notes
 
-Everything in the miniature is laid out from real data and then compressed.
-Sources: OpenStreetMap (Overpass / Nominatim, ODbL), Wikipedia / Wikimedia Commons
-photographs (used as visual reference only, not redistributed), Google Maps listing
-for Brototype, official Forum Malls page.
+Laid out and compressed directly from real Google Maps / OpenStreetMap coordinates along NH 766 and SH 34 in Kozhikode district, Kerala.
 
-## Real coordinates (lat, lon)
+## Real Google Maps Coordinates (Lat, Lon)
 
 | Place | Lat | Lon | Notes |
 | --- | --- | --- | --- |
-| Kundannoor Jn | 9.9370 | 76.3180 | NH66 flyover N-S, ~515 m, 6 lanes |
-| Brototype Kochi | 9.93804 | 76.32181 | Eadathuruthikaran Holdings, Kundannoor-Maradu road, ~410 m E of junction |
-| Crowne Plaza | 9.9337 | 76.3192 | SE of Kundannoor Jn |
-| Forum Kochi | 9.94402 | 76.31679 | W side of NH66, ~770 m N of Kundannoor, 193 x 106 m |
-| Champakkara canal bridge | 9.9547 | 76.3184 | 100 m NH66 bridge |
-| Vyttila Jn | 9.9685 | 76.3182 | Flyover N-S ~495 m, metro crosses above it E-W |
-| Vyttila Mobility Hub | 9.96856 | 76.32178 | E of junction, 220 x 370 m, river on its east |
-| Palarivattom flyover | 10.0054 | 76.3129 | NH66 over Civil Line Rd, ~600 m |
-| Palarivattom metro | 10.0063 | 76.3049 | |
-| JLN Stadium | 9.99723 | 76.30083 | 234 x 261 m bowl, S of Banerji Rd |
-| JLN Stadium metro | 10.00027 | 76.29908 | |
-| Kaloor metro | 9.9943 | 76.29167 | |
-| Changampuzha Park metro | 10.0151 | 76.30245 | |
-| Edappally Jn / metro | 10.0255 | 76.3080 | Flyover runs SW-NE (Old NH47 -> NH544), ~700 m |
-| Lulu Mall | 10.02722 | 76.30798 | 169 x 284 m, 4 levels, long axis N-S |
-| Kochi Marriott | 10.0294 | 76.30751 | 17 levels, N of the mall |
-| Lulu parking | 10.02595 | 76.30737 | SW of mall, 5 levels |
+| Thamarassery Chungam Jn | 11.4138 | 75.9227 | NH 766 & SH 34 intersection, heart of Thamarassery town |
+| Thamarassery Hub / Bilal Complex | 11.4145 | 75.9240 | Spawning forecourt on NH 766 |
+| Thamarassery New Bus Stand & KSRTC | 11.4152 | 75.9265 | Main KSRTC transit point and bus depot |
+| Thamarassery Old Bus Stand | 11.4125 | 75.9200 | Commercial junction west of Chungam |
+| Karadi Junction | 11.4080 | 75.9180 | South intersection on NH 766 toward Kozhikode |
+| Thamarassery Mini Stadium & Ground | 11.4110 | 75.9210 | Sports ground near Karadi |
+| Engapuzha Junction | 11.4460 | 75.9450 | NE on NH 766 toward Wayanad |
+| Puduppadi | 11.4650 | 75.9550 | Gateway village on the mountain foothills |
+| Adivaram | 11.4930 | 75.9720 | Foot of the Thamarassery Ghats (Churam) |
+| Thamarassery Churam (9 Hairpin Bends) | 11.5170 | 75.9900 | Historic mountain pass rising into Wayanad |
+| Koduvally Junction | 11.3570 | 75.9100 | Gold capital south on NH 766 |
+| Kunnamangalam | 11.3050 | 75.8750 | Major Kozhikode suburb & educational hub |
+| Balussery / Koyilandy Exit | 11.4300 | 75.8500 | NW via SH 34 |
+| Mukkam Exit | 11.3800 | 75.9800 | SE via SH 34 toward Manjeri |
 
-## Geography that the miniature preserves
+## Highway Corridors Preserved
 
-* NH66 bypass is the N-S spine: Kundannoor -> Vyttila -> Palarivattom -> Edappally.
-* At Edappally NH66 turns NW (Varapuzha), NH544 leaves NE (Aluva). Lulu sits in the
-  wedge between them. The flyover + metro follow the Old NH47 / NH544 diagonal.
-* The metro follows Old NH47 / Banerji Road: Edappally -> Changampuzha Park ->
-  Palarivattom -> JLN Stadium -> Kaloor, and SA Road: Kadavanthra -> Elamkulam ->
-  Vyttila -> Thykoodam. At Vyttila it passes *over* the road flyover (3 levels).
-* Backwaters lie W and S of Kundannoor (Kundannoor bridge to Thevara).
-* Traffic drives on the left.
-
-## Visual references
-
-* **JLN Stadium** - triple-tier bowl, terracotta folded-plate (zig-zag) roof on green
-  steel trusses, four giant curved concrete floodlight pylons, multi-colour seats.
-* **Lulu Mall** - long beige/sandstone block, glass atrium with white tensile roof
-  peaks, red LuLu signage, large facade hoardings, Marriott tower behind.
-* **Forum Kochi** - charcoal podium with LED screens, central facade of white vertical
-  fins with green/yellow diagonal "palm leaf" panels, rooftop "forum" sign with the
-  butterfly mark, red THOMSUN sign, white hotel block beside it.
-* **Vyttila Mobility Hub** - long row of curved shell canopies with lattice skylights
-  on white V-columns, interlocking paver apron, numbered bus bays.
-* **Brototype** - modern multi-storey commercial block; brand is dark grey / black
-  with silver lettering and red accents.
-* **Kochi Metro** - turquoise + white 3-car trains, single-pier viaduct in the median.
-* **Street furniture** - black/yellow painted kerbs, green trilingual NHAI place
-  boards (Malayalam / Hindi / English), double-arm median streetlights, rooftop
-  hoardings, coconut palms everywhere, white apartment towers with red tiled caps.
-
-## Compression
-
-Real corridor ~11 km x 4 km -> game ~3.3 km x 1.9 km. Landmarks keep ~60-70 % of
-their real footprint so they still read as large buildings.
+* **NH 766 (Wayanad Road)** is the primary spine: Kozhikode -> Kunnamangalam -> Koduvally -> Karadi -> Chungam -> Engapuzha -> Puduppadi -> Adivaram -> Churam.
+* **SH 34 (Koyilandy - Edavanna State Highway)** crosses at Chungam: Balussery/Koyilandy (NW) to Mukkam/Manjeri (SE).
+* Left-hand traffic, NHAI trilingual green place boards, Kerala State Road Transport Corporation (KSRTC) buses, local private buses, and autorickshaws.
